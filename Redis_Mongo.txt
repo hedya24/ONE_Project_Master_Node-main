@@ -1,0 +1,12 @@
+# ------------ MASTERNODE redis retup commands
+
+
+ 1°) helm install redis bitnami/redis --set  architecture=replication --set sentinel.enabled=true --set fullnameOverride=redis-master-pod-service --set replica.resources.requests.cpu=50m --set replica.resources.requests.memory=64Mi --set sentinel.resources.requests.cpu=50m --set auth.enabled=false
+ 2°) kubectl get pods -l app.kubernetes.io/instance=redis
+
+
+
+# -------------- MASTERNODE MongoDB setup ----
+ 1°) kubectl apply -f initDB.yaml
+ 2°) helm install mongodb bitnami/mongodb --set mongodb.architecture=replicaSet --set fullnameOverride=mongodb-service --set auth.enabled=false --set initdbScriptsConfigMap=initdb
+

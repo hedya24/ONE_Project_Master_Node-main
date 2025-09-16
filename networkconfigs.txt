@@ -1,0 +1,7 @@
+///// HTTPS and Nginx configurations /////
+
+cert manager should be installed on the cluster :
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml
+nginx.ingress should be installed on the Cluster:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+

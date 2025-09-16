@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master-node-app-deployment-1
+  labels:
+    app: master-node-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: master-node-app
+  template:
+    metadata:
+      labels:
+        app: master-node-app
+    spec:
+      containers:
+        - name: master-node-app
+          image: aymen019/onefinalmasterimage1234:v1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NGINX_INGRESS_IP
+              value: "NGINX_IP_PLACEHOLDER.nip.io"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: master-node-app-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: master-node-app-deployment-1
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: default-serviceaccount-node-access
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
