@@ -227,5 +227,4 @@ curl -X POST https://<NGINX_INGRESS_IP>.nip.io:443/register-slave \
 
 ⚠️  **Important:** for a real word implementation you have to uncomment the CameraNode communication part of the slave and create a new image of the slavepod also change the master to deploy the new slave image and create also a new master image that get deploy only this new slaveimage and change the deployment file of the master to deploy the new master image (this process is for all code modifications and not only this one) 
 
-For extra-infos : aymenbouallagui19@gmail.com 
 ---
